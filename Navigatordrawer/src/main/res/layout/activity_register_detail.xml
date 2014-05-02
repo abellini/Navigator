@@ -45,6 +45,14 @@
             android:layout_alignTop="@+id/register_form"
             android:layout_centerHorizontal="true" />
 
+        <Button
+            android:id="@+id/register_detail_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/action_register"
+            android:textStyle="bold"/>
 
         </LinearLayout>
 

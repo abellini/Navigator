@@ -6,11 +6,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RegisterDetailActivity extends Activity {
 
     private static final String REGISTER_DETAIL_ACTIVITY = "RegisterDetailActivity";
+
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +28,29 @@ public class RegisterDetailActivity extends Activity {
         setContentView(R.layout.activity_register_detail);
 
         Bundle bundle = getIntent().getExtras();
+        String json = bundle.getString("jsonObject");
+        try {
+            if (json != null) {
+                spinner = (Spinner) findViewById(R.id.spinnerCoin);
+                List<String> list = new ArrayList<String>();
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray coins = jsonObject.getJSONArray("coins");
+                for (int i = 0; i < coins.length(); i++) {
+                    JSONObject obj = coins.getJSONObject(i);
+                    String name = obj.getString("name");
+                    list.add(name);
+                }
 
-        if(bundle.getString("jsonObject")!= null) {
-            Log.i(REGISTER_DETAIL_ACTIVITY, "Chegouuuu....");
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                        android.R.layout.simple_spinner_item, list);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
+
+            }
+        } catch (Exception e) {
+
         }
 
-        //spinner2 = (Spinner) findViewById(R.id.spinner2);
-        //List<String> list = new ArrayList<String>();
     }
 
 
