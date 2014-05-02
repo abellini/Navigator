@@ -343,7 +343,9 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
                     saveTablet(tablet);
                     Log.i(REGISTER_ACTIVITY, "Salved record(s)");
 
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Intent it = new Intent(RegisterActivity.this, RegisterDetailActivity.class);
+                    it.putExtra("jsonObject", jsonObject.toString());
+                    startActivity(it);
 
                     finish();
                 } else {
