@@ -20,37 +20,53 @@ public class RegisterDetailActivity extends Activity {
 
     private static final String REGISTER_DETAIL_ACTIVITY = "RegisterDetailActivity";
 
-    private Spinner spinner;
+    private Spinner spinnerCoin, spinnerAttendant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_detail);
 
+        // Get Params
         Bundle bundle = getIntent().getExtras();
         String json = bundle.getString("jsonObject");
+
+        spinnerCoin = (Spinner) findViewById(R.id.spinnerCoin);
+        spinnerAttendant = (Spinner) findViewById(R.id.spinnerAttendant);
+
         try {
             if (json != null) {
-                spinner = (Spinner) findViewById(R.id.spinnerCoin);
-                List<String> list = new ArrayList<String>();
                 JSONObject jsonObject = new JSONObject(json);
-                JSONArray coins = jsonObject.getJSONArray("coins");
-                for (int i = 0; i < coins.length(); i++) {
-                    JSONObject obj = coins.getJSONObject(i);
-                    String name = obj.getString("name");
-                    list.add(name);
-                }
+                JSONArray jsonCoins = jsonObject.getJSONArray("coins");
+                this.populateSpinner(jsonCoins, spinnerCoin);
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_spinner_item, list);
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(dataAdapter);
+                JSONArray jsonAttendants = jsonObject.getJSONArray("attendants");
+                this.populateSpinner(jsonAttendants, spinnerAttendant);
 
             }
         } catch (Exception e) {
 
         }
 
+    }
+
+
+    private void populateSpinner(JSONArray jsonArray, Spinner spinner) {
+        List<String> list = new ArrayList<String>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                String name = obj.getString("name");
+                list.add(name);
+            }
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+        } catch (Exception e) {
+
+        }
     }
 
 

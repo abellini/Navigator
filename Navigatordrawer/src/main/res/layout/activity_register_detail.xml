@@ -10,7 +10,7 @@
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/register_progress"
+        android:id="@+id/register_detail_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,13 +18,13 @@
         android:visibility="gone"/>
 
     <ScrollView
-        android:id="@+id/register_form"
+        android:id="@+id/register_detail_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <LinearLayout
-            android:id="@+id/registration_form"
+            android:id="@+id/registration_detail_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -42,7 +42,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerCoin"
-            android:layout_alignTop="@+id/register_form"
+            android:layout_alignTop="@+id/register_detail_form"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textAttendant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/data_attendant"
+            />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerAttendant"
+            android:layout_alignTop="@+id/register_detail_form"
             android:layout_centerHorizontal="true" />
 
         <Button

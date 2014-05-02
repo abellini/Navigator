@@ -11,7 +11,7 @@ import br.com.navigator.database.RepositoryScript;
 
 public class SplashScreen extends Activity implements Runnable {
 
-    private final int DELAY = 3000;
+    private final int DELAY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
