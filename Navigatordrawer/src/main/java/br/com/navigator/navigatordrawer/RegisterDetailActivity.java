@@ -33,7 +33,6 @@ public class RegisterDetailActivity extends Activity {
 
         spinnerCoin = (Spinner) findViewById(R.id.spinnerCoin);
         spinnerAttendant = (Spinner) findViewById(R.id.spinnerAttendant);
-
         try {
             if (json != null) {
                 JSONObject jsonObject = new JSONObject(json);
