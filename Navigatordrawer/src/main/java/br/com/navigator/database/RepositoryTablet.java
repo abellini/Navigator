@@ -7,12 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.navigator.entity.Tablet;
 
-public class RepositoryTablet {
+public class RepositoryTablet extends Repository<Tablet> {
 
     private static final String REPOSITORY_TABLET = "RepositoryTablet";
 
@@ -44,6 +45,7 @@ public class RepositoryTablet {
 
     }
 
+    @Override
     public long save(Tablet tablet) {
         long id = tablet.getTabletId();
         if (id != 0) {
@@ -54,7 +56,8 @@ public class RepositoryTablet {
         return id;
     }
 
-    private ContentValues populateContentValues(Tablet tablet) {
+    @Override
+    protected ContentValues populateContentValues(Tablet tablet) {
         ContentValues values = new ContentValues();
         values.put(Tablets.COLUMN_NAME_STATUS_ID, tablet.getStatusId());
         values.put(Tablets.COLUMN_NAME_COIN_ID, tablet.getCoinId());
@@ -68,6 +71,7 @@ public class RepositoryTablet {
         return values;
     }
 
+    @Override
     public long insert(Tablet tablet) {
 
         ContentValues values = populateContentValues(tablet);
@@ -76,6 +80,7 @@ public class RepositoryTablet {
         return id;
     }
 
+    @Override
     public int update(Tablet tablet) {
         ContentValues values = populateContentValues(tablet);
         String _id = String.valueOf(tablet.getTabletId());
@@ -86,6 +91,7 @@ public class RepositoryTablet {
         return count;
     }
 
+    @Override
     public int delete(long id) {
         String where = Tablets.COLUMN_NAME_TABLET_ID + "=?";
         String _id = String.valueOf(id);
@@ -95,7 +101,8 @@ public class RepositoryTablet {
         return count;
     }
 
-    public Tablet findTablet(long id) {
+    @Override
+    public Tablet findById(long id) {
         Cursor c = db.query(true, Tablets.TABLE_NAME, Tablet.columns, Tablets.COLUMN_NAME_TABLET_ID + "=" + id, null, null, null, null, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
@@ -113,11 +120,13 @@ public class RepositoryTablet {
         return null;
     }
 
+    @Override
     public Cursor getCursor() {
         return db.query(Tablets.TABLE_NAME, Tablet.columns, null, null, null, null, null, null);
     }
 
-    public List<Tablet> listTablets() {
+    @Override
+    public List<Tablet> listAll() {
         Cursor c = getCursor();
         List<Tablet> tablets = new ArrayList<Tablet>();
         if (c.moveToFirst()) {
@@ -149,14 +158,11 @@ public class RepositoryTablet {
         return tablets;
     }
 
+    @Override
     public Cursor query(SQLiteQueryBuilder queryBuilder, String[]  projection, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
         Cursor c = queryBuilder.query(this.db, projection, selection, selectionArgs, groupBy, having, orderBy);
         return c;
     }
 
-    public void close() {
-        if (this.db != null) {
-            this.db.close();
-        }
-    }
+
 }
